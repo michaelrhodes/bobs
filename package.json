@@ -1,0 +1,12 @@
+{
+  "name": "bobs",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "dexy": "github:michaelrhodes/dexy#1.0.5"
+  },
+  "scripts": {
+    "test": "dexy test"
+  }
+}
