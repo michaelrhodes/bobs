@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width">
+<style>
+  body { margin: 1.5em }
+  button { margin: 0.5em 0 }
+  pre { overflow: auto; padding-bottom: 2em }
+</style>
+<body>
+  <script>
+    worker = new Worker('benchmark.js')
+    worker.onmessage = onmessage
+
+    hash = '#', check = '✓', messages = []
+    results = document.createElement('pre')
+    button = document.createElement('button')
+    button.textContent = text = 'run benchmark'
+    button.onclick = function () {
+      button.disabled = true
+      button.textContent = 'running...'
+      worker.postMessage('run')
+    }
+
+    document.body.appendChild(button)
+    document.body.appendChild(results)
+
+    function onmessage (e) {
+      e.data[0] === hash ||
+      e.data[0] === check ?
+        messages.push('\n' + e.data) :
+        messages.push(e.data)
+
+      results.textContent = (
+        messages.join('\n').trim()
+      )
+
+      if (e.data[0] === check) {
+        button.disabled = false
+        button.textContent = text
+      }
+    }
+  </script>
+</body>
