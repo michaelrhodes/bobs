@@ -2,12 +2,12 @@ module.exports = decode
 
 var t = new TextDecoder
 
-var b = 98
+var c = 58
 var d = 100
 var e = 101
 var i = 105
 var l = 108
-var c = 58
+var s = 115
 
 var dash = 45
 var zero = 48
@@ -33,10 +33,10 @@ function integer ($) {
   return intval($, ++$.i, $.i = ndx($, e) + 1)
 }
 
-function bytes ($, bytes, val, l) {
+function bytes ($, raw, val, l) {
   l = intval($, $.i, $.i = ndx($, c) + 1)
   val = $.val.subarray($.i, $.i += l)
-  return bytes ? val : t.decode(val)
+  return raw ? val : t.decode(val)
 }
 
 function step ($, ch) {
@@ -44,7 +44,7 @@ function step ($, ch) {
     ch === l ? list($) :
     ch === i ? integer($) :
     ch === d ? dictionary($) :
-    bytes($, ch === b)
+    bytes($, ch !== s)
   )
 }
 

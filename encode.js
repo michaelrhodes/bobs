@@ -2,12 +2,12 @@ module.exports = encode
 
 var t = new TextEncoder
 
-var b = t.encode('b')
+var c = t.encode(':')
 var d = t.encode('d')
 var e = t.encode('e')
 var i = t.encode('i')
 var l = t.encode('l')
-var c = t.encode(':')
+var s = t.encode('s')
 
 function encode (val, $, i, s, l, e, b, o, n) {
   i = s = 0, l = step($ = [], val), e = []
@@ -35,12 +35,12 @@ function integer ($, val) {
   $.push(i, t.encode(+val), e)
 }
 
-function string ($, val) {
-  $.push(t.encode((val = t.encode(val)).byteLength), c, val)
+function bytes ($, val) {
+  $.push(t.encode(val.byteLength), c, val)
 }
 
-function bytes ($, val) {
-  $.push(b, t.encode(val.byteLength), c, val)
+function string ($, val) {
+  $.push(s, t.encode((val = t.encode(val)).byteLength), c, val)
 }
 
 function step ($, val, type) {

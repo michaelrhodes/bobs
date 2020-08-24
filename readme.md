@@ -1,5 +1,5 @@
 # bobs
-browser-optimised bencoding superset (it adds an explicit byte array type)
+browser-optimised bencoding superset (it adds an explicit string type)
 
 [![ci](https://travis-ci.org/michaelrhodes/bobs.svg?branch=master)](https://travis-ci.org/michaelrhodes/bobs)
 
