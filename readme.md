@@ -5,7 +5,7 @@ browser-optimised bencoding superset (it adds an explicit string type)
 
 ## install
 ```sh
-npm install https://pkg.mkr.sx/bobs/2.0.0.tgz
+npm install https://pkg.mkr.sx/bobs/2.0.1.tgz
 ```
 
 ## use
