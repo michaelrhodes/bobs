@@ -45,11 +45,27 @@ function string ($, val) {
 
 function step ($, val, type) {
   type = typeof val
-  type === 'string' || type === 'bigint' || (type === 'number' && val % 1) ? string($, val) :
-  type === 'number' || type === 'boolean' ? integer($, val) :
-  val instanceof ArrayBuffer ? bytes($, new Uint8Array(val)) :
-  ArrayBuffer.isView(val) ? bytes($, val) :
-  Array.isArray(val) ? list($, val) :
-  val instanceof Object ? dictionary($, val) : void 0
+
+  type === 'string' || type === 'bigint' ||
+ (type === 'number' && val % 1) ?
+  string($, val) :
+
+  type === 'number' || type === 'boolean'  ?
+  integer($, val) :
+
+  val instanceof ArrayBuffer ?
+  bytes($, new Uint8Array(val)) :
+
+  ArrayBuffer.isView(val) ?
+  bytes($, val) :
+
+  Array.isArray(val) ?
+  list($, val) :
+
+  val instanceof Object ?
+  dictionary($, val) :
+
+  integer($, 0)
+
   return $.length
 }
