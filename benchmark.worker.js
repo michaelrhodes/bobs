@@ -1,6 +1,5 @@
-importScripts("https://pkg.mkr.sx/benchmark/2.1.4.js")
-importScripts("https://pkg.mkr.sx/bencode/2.0.0.js")
-importScripts("https://pkg.mkr.sx/bobs/2.0.1.js")
+importScripts('https://pkg.mkr.sx/benchmark/2.1.4.js')
+importScripts('https://pkg.mkr.sx/bencode/2.0.0.js')
 
 running = false
 
@@ -17,15 +16,15 @@ onmessage = function () {
 
   suite('encode', function () {
     new Benchmark.Suite()
-      .add('bencode.encode', bencodeEncode)
-      .add('bobs.encode', bobsEncode)
+      .add('bencode@2.0.0', bencodeEncode)
+      .add('bobs@' + version, bobsEncode)
       .on('cycle', cycle)
       .run()
 
     suite('decode', function () {
       new Benchmark.Suite()
-        .add('bencode.decode', bencodeDecode)
-        .add('bobs.decode', bobsDecode)
+        .add('bencode@2.0.0', bencodeDecode)
+        .add('bobs@' + version, bobsDecode)
         .on('cycle', cycle)
         .on('complete', complete)
         .run()
