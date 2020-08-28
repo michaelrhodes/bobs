@@ -14,7 +14,7 @@ var zero = 48
 var nine = 57
 
 function decode (val) {
-  return step({ i: 0, val: val, l: val.byteLength })
+  return step({ i: 0, val: new Uint8Array(val), l: val.byteLength })
 }
 
 function dictionary ($, val) {
