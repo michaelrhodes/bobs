@@ -1,13 +1,17 @@
 module.exports = encode
 
-var t = new TextEncoder
+var encoder = new TextEncoder
 
-var c = t.encode(':')
-var d = t.encode('d')
-var e = t.encode('e')
-var i = t.encode('i')
-var l = t.encode('l')
-var s = t.encode('s')
+var c = s2b(':')
+var d = s2b('d')
+var e = s2b('e')
+var i = s2b('i')
+var l = s2b('l')
+var s = s2b('s')
+
+function s2b (str) {
+  return encoder.encode(str)
+}
 
 function encode (val, $, i, s, l, e, b, o, n) {
   i = s = 0, l = step($ = [], val), e = []
@@ -32,32 +36,31 @@ function list ($, val, i, m) {
 }
 
 function integer ($, val) {
-  $.push(i, t.encode(+val), e)
+  $.push(i, s2b(+val), e)
 }
 
 function bytes ($, val) {
-  $.push(t.encode(val.byteLength), c, val)
+  $.push(s2b(val.byteLength), c, val)
 }
 
 function string ($, val) {
-  $.push(s, t.encode((val = t.encode(val)).byteLength), c, val)
+  $.push(s, s2b((val = s2b(val)).byteLength), c, val)
 }
 
 function step ($, val, type) {
   type = typeof val
 
-  type === 'string' || type === 'bigint' ||
+  type === 'string' ||
+  type === 'bigint' ||
  (type === 'number' && val % 1) ?
   string($, val) :
 
-  type === 'number' || type === 'boolean'  ?
+  type === 'number' ||
+  type === 'boolean' ?
   integer($, val) :
 
-  val instanceof ArrayBuffer ?
+  val && val.byteLength ?
   bytes($, new Uint8Array(val)) :
-
-  ArrayBuffer.isView(val) ?
-  bytes($, val) :
 
   Array.isArray(val) ?
   list($, val) :

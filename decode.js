@@ -1,6 +1,6 @@
 module.exports = decode
 
-var t = new TextDecoder
+var decoder = new TextDecoder
 
 var c = 58
 var d = 100
@@ -36,7 +36,7 @@ function integer ($) {
 function bytes ($, raw, val, l) {
   l = intval($, $.i, $.i = ndx($, c) + 1)
   val = $.val.subarray($.i, $.i += l)
-  return raw ? val : t.decode(val)
+  return raw ? val : b2s(val)
 }
 
 function step ($, ch) {
@@ -58,4 +58,8 @@ function intval ($, i, l, val, sign, ch) {
     if ((ch >= zero && ch <= nine)) val = val * 10 + ch - 48
   }
   return val * sign
+}
+
+function b2s (bytes) {
+  return decoder.decode(bytes)
 }
