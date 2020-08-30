@@ -1,6 +1,6 @@
 {
   "name": "bobs",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "index.js",
   "license": "CC0-1.0",
   "devDependencies": {
