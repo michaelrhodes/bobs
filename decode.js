@@ -14,18 +14,18 @@ var zero = 48
 var nine = 57
 
 function decode (val) {
-  return step({ i: 0, val: new Uint8Array(val), l: val.byteLength })
+  return next({ i: 0, val: new Uint8Array(val), l: val.byteLength })
 }
 
 function dictionary ($, val) {
   $.i++, val = {}
-  while ($.val[$.i] !== e) val[bytes($)] = step($)
+  while ($.val[$.i] !== e) val[string($)] = next($)
   return $.i++, val
 }
 
 function list ($, val) {
   $.i++, val = []
-  while ($.val[$.i] !== e) val[val.length] = step($)
+  while ($.val[$.i] !== e) val[val.length] = next($)
   return $.i++, val
 }
 
@@ -33,18 +33,22 @@ function integer ($) {
   return intval($, ++$.i, $.i = ndx($, e) + 1)
 }
 
-function bytes ($, raw, val, l) {
-  l = intval($, $.i, $.i = ndx($, c) + 1)
-  val = $.val.subarray($.i, $.i += l)
-  return raw ? val : b2s(val)
+function string ($) {
+  return decoder.decode(bytes($))
 }
 
-function step ($, ch) {
+function bytes ($, l) {
+  l = intval($, $.i, $.i = ndx($, c) + 1)
+  return $.val.subarray($.i, $.i += l)
+}
+
+function next ($, ch) {
   return (ch = $.val[$.i]), (
     ch === l ? list($) :
     ch === i ? integer($) :
     ch === d ? dictionary($) :
-    bytes($, ch !== s)
+    ch === s ? string($) :
+    bytes($)
   )
 }
 
@@ -58,8 +62,4 @@ function intval ($, i, l, val, sign, ch) {
     if ((ch >= zero && ch <= nine)) val = val * 10 + ch - 48
   }
   return val * sign
-}
-
-function b2s (bytes) {
-  return decoder.decode(bytes)
 }

@@ -14,7 +14,7 @@ function s2b (str) {
 }
 
 function encode (val, $, i, s, l, e, b, o, n) {
-  i = s = 0, l = step($ = [], val), e = []
+  i = s = 0, l = next($ = [], val), e = []
   for (; i < l; i++) s += e[i] = $[i].byteLength
   for (i = b = 0, o = new Uint8Array(s); i < l; i++)
     for (n = 0; n < e[i]; n++) o[b++] = $[i][n]
@@ -24,14 +24,14 @@ function encode (val, $, i, s, l, e, b, o, n) {
 function dictionary ($, val, k, i, l) {
   $.push(d)
   k = Object.keys(val).sort(), i = 0, l = k.length
-  for (; i < l; i++) string($, k[i]), step($, val[k[i]])
+  for (; i < l; i++) string($, k[i]), next($, val[k[i]])
   $.push(e)
 }
 
 function list ($, val, i, m) {
   $.push(l)
   i = 0, m = val.length
-  for (; i < m; i++) step($, val[i])
+  for (; i < m; i++) next($, val[i])
   $.push(e)
 }
 
@@ -47,16 +47,11 @@ function string ($, val) {
   $.push(s, s2b((val = s2b(val)).byteLength), c, val)
 }
 
-function step ($, val, type) {
+function next ($, val, type) {
   type = typeof val
 
-  type === 'string' ||
-  type === 'bigint' ||
- (type === 'number' && val % 1) ?
-  string($, val) :
-
-  type === 'number' ||
-  type === 'boolean' ?
+  type === 'boolean' ||
+ (type === 'number' && val % 1 === 0) ?
   integer($, val) :
 
   val && val.byteLength ?
@@ -68,6 +63,8 @@ function step ($, val, type) {
   val instanceof Object ?
   dictionary($, val) :
 
+  val ?
+  string($, val) :
   integer($)
 
   return $.length
