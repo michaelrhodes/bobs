@@ -68,7 +68,7 @@ function step ($, val, type) {
   val instanceof Object ?
   dictionary($, val) :
 
-  integer($, 0)
+  integer($)
 
   return $.length
 }
