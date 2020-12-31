@@ -3,11 +3,11 @@ module.exports = decode
 var decoder = new TextDecoder
 
 var c = 58
+var b = 98
 var d = 100
 var e = 101
 var i = 105
 var l = 108
-var s = 115
 
 var dash = 45
 var zero = 48
@@ -15,6 +15,10 @@ var nine = 57
 
 function decode (val) {
   return next({ i: 0, val: new Uint8Array(val), l: val.byteLength })
+}
+
+function string ($) {
+  return decoder.decode(bytes($))
 }
 
 function dictionary ($, val) {
@@ -33,10 +37,6 @@ function integer ($) {
   return intval($, ++$.i, $.i = ndx($, e) + 1)
 }
 
-function string ($) {
-  return decoder.decode(bytes($))
-}
-
 function bytes ($, l) {
   l = intval($, $.i, $.i = ndx($, c) + 1)
   return $.val.subarray($.i, $.i += l)
@@ -47,8 +47,8 @@ function next ($, ch) {
     ch === l ? list($) :
     ch === i ? integer($) :
     ch === d ? dictionary($) :
-    ch === s ? string($) :
-    bytes($)
+    ch === b ? bytes($) :
+    string($)
   )
 }
 

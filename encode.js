@@ -7,7 +7,7 @@ var d = s2b('d')
 var e = s2b('e')
 var i = s2b('i')
 var l = s2b('l')
-var s = s2b('s')
+var b = s2b('b')
 
 function s2b (str) {
   return encoder.encode(str)
@@ -19,6 +19,10 @@ function encode (val, $, i, s, l, e, b, o, n) {
   for (i = b = 0, o = new Uint8Array(s); i < l; i++)
     for (n = 0; n < e[i]; n++) o[b++] = $[i][n]
   return o
+}
+
+function string ($, val) {
+  $.push(s2b((val = s2b(val)).byteLength), c, val)
 }
 
 function dictionary ($, val, k, i, l) {
@@ -40,11 +44,7 @@ function integer ($, val) {
 }
 
 function bytes ($, val) {
-  $.push(s2b(val.byteLength), c, val)
-}
-
-function string ($, val) {
-  $.push(s, s2b((val = s2b(val)).byteLength), c, val)
+  $.push(b, s2b(val.byteLength), c, val)
 }
 
 function next ($, val, type) {
