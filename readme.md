@@ -5,7 +5,7 @@ browser-optimised bencoding superset (it add an explicit byte-array type)
 
 ## install
 ```sh
-npm install https://pkg.mkr.sx/bobs/2.0.4.tgz
+npm install https://pkg.mkr.sx/bobs/3.0.0.tgz
 ```
 
 ## use
